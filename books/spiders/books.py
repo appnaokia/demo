@@ -26,7 +26,6 @@ class BooksSpider(scrapy.Spider):
         product = response.css(".type0")
         item["title"] = product.css(".rowtop > h1 ::text").extract_first()
         item['price'] = response.css('.area_price strong ::text').extract_first()
-        print(item)
 
         # get from xpath
         # item['category'] = response.xpath(
@@ -36,4 +35,5 @@ class BooksSpider(scrapy.Spider):
         #     "//div[@id='product_description']/following-sibling::p/text()"
         # ).extract_first()
        
+        print(item)
         yield item
