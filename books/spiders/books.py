@@ -4,7 +4,7 @@ import scrapy
 
 class BooksSpider(scrapy.Spider):
     name = "books"
-    allowed_domains = ["https://www.thegioididong.com/may-tinh-bang"]
+    allowed_domains = ["thegioididong.com"] # dont't config https://www...
     start_urls = [
         'https://www.thegioididong.com/may-tinh-bang',
     ]
@@ -12,6 +12,7 @@ class BooksSpider(scrapy.Spider):
     def parse(self, response):
         # find link of item
         for book_url in response.css("li.item > a ::attr(href)").extract():
+            print(book_url)
             yield scrapy.Request(response.urljoin(book_url), callback=self.parse_book_page) # if have product, call function parse_book_page
         
         # next page (of list product), if has, call seft again
@@ -20,11 +21,13 @@ class BooksSpider(scrapy.Spider):
             yield scrapy.Request(response.urljoin(next_page), callback=self.parse)
 
     def parse_book_page(self, response):
+        print(response)
         item = {}
         # find info of product
         product = response.css(".type0")
-        item["title"] = product.css("h1 ::text").extract_first()
+        item["title"] = product.css(".rowtop > h1 ::text").extract_first()
         item['price'] = response.css('.area_price strong ::text').extract_first()
+        print(item)
 
         # get from xpath
         # item['category'] = response.xpath(
