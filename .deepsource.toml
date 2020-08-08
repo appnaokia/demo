@@ -13,10 +13,10 @@ exclude_patterns = [
 [[analyzers]]
 name = "python"
 enabled = true
-dependency_file_paths = ["requirements/development.txt"]
+dependency_file_paths = ["requirement.txt"]
 
   [analyzers.meta]
-  runtime_version = "3.x.x"
+  runtime_version = "3.6.5"
   type_checker = "mypy"
   max_line_length = 88
   skip_doc_coverage = ["module", "magic", "init"]
